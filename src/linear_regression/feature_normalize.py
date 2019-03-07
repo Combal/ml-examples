@@ -1,7 +1,6 @@
 import numpy as np
 
 
-# noinspection PyPep8Naming
 def feature_normalize(X):
     X_norm = X
     _, m = X.shape
