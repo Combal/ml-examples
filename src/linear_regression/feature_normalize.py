@@ -2,7 +2,7 @@ import numpy as np
 
 
 # noinspection PyPep8Naming
-def featureNormalize(X):
+def feature_normalize(X):
     X_norm = X
     _, m = X.shape
     mu = np.zeros(m)

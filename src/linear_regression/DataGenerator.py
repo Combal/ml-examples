@@ -1,5 +1,6 @@
 import numpy as np
 import random
+# don't remove
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 import os
@@ -43,7 +44,7 @@ class DataGenerator:
 
         plt.show()
 
-    def saveData(self):
+    def save_data(self):
         # pd.DataFrame(self._np_data).to_csv("path/to/file.csv")
         cwd = os.getcwd()
         path_to_data = os.path.join(os.path.realpath(cwd), 'data')
