@@ -10,26 +10,29 @@ random.seed(1)
 
 class DataGenerator:
     _np_data = []
+    _theta = [-12, 5590, -0.002]
+    # _theta = [1, 1, 1]
 
-    @staticmethod
-    def _h(x1, x2):
-        return 1 + x1 + x2
+    def _h(self, x1, x2):
+        return self._theta[0] + self._theta[1] * x1 + self._theta[2] * x2
 
-    @staticmethod
-    def _generator():
+    def _generator(self):
         while True:
             x1 = random.uniform(-100, 100)
             x2 = x1 + random.uniform(-20, 20)
-            yield x1, x2, DataGenerator._h(x1, x2)
+            yield x1, x2, self._h(x1, x2)
 
     def generate(self, n):
         gen = self._generator()
         data = []
         for i in range(0, n):
             x1, x2, y = next(gen)
-            data.append([x1, x2, y + random.uniform(-50, 50)])
+            data.append([x1, x2, y + random.uniform(-(50 * self._theta[1]*self._theta[2]), (50 * self._theta[1]*self._theta[2]))])
         self._np_data = np.array(data, dtype=float)
-        return self._np_data
+        return self.get_data()
+
+    def get_data(self):
+        return np.copy(self._np_data)
 
     def plot(self):
         ax = plt.axes(projection='3d')
