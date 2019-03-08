@@ -8,6 +8,7 @@ import os
 
 class DataGenerator:
     _np_data = []
+    _x_deviation = 20    # x2-ის გადახრა x1-ისგან
 
     def __init__(self, theta, x_range=(-100, 100)):
         self._theta = np.array(theta)
@@ -15,15 +16,16 @@ class DataGenerator:
         print('desired theta: {}'.format(theta))
 
     def h(self, x, theta=None):
-        theta = self._theta if theta is None else theta
-        return np.dot(np.array(theta), np.array(x))         # same as: t0 + t1 * x1 + t2 * x2
+        x = np.array(x)
+        theta = np.array(theta) if theta is not None else self._theta
+        return np.dot(theta, x)         # same as: t0 + t1 * x1 + t2 * x2
 
     def _generator(self):
         a, b = self._x_range
-        delta = 20
+
         while True:
             x1 = random.uniform(a, b)
-            x2 = x1 + random.uniform(-delta, delta)
+            x2 = x1 + random.uniform(-self._x_deviation, self._x_deviation)
             yield x1, x2, self.h([1, x1, x2])
 
     def generate(self, n):
@@ -31,16 +33,17 @@ class DataGenerator:
         data = []
         for i in range(0, n):
             x1, x2, y = next(gen)
-            data.append([x1, x2, y + self._make_noise()])
+            data.append([x1, x2, y + self._get_y_deviation()])
         self._np_data = np.array(data, dtype=float)
         return self.get_data()
 
     def get_data(self):
         return np.copy(self._np_data)
 
-    def _make_noise(self):
+    def _get_y_deviation(self):
+        """ y-ის გადახრა რეალური მნიშვნელობისგან """
         _, b = self._x_range
-        d = self.h([1, b, b]) * 20 / b
+        d = self.h([1, b, b]) * self._x_deviation / b
         return random.uniform(-d, d)
 
     def plot(self, theta=None, title=None):
