@@ -10,9 +10,3 @@ Examples of machine learning in python
 ```bash
 $ sudo apt install python3-tk
 ```
-
-## Run
-
-```bash
-$ python -m src.linear_regression.main
-```
