@@ -8,7 +8,7 @@ import os
 
 class DataGenerator:
     _np_data = []
-    _x_deviation = 20    # x2-ის გადახრა x1-ისგან
+    _x_deviation = 1    # x2-ის გადახრა x1-ისგან
 
     def __init__(self, theta, x_range=(-100, 100)):
         self._theta = np.array(theta)
@@ -75,9 +75,7 @@ class DataGenerator:
 
 
 if __name__ == '__main__':
-    generator = DataGenerator(theta=[
-        random.uniform(-100, 100),
-        random.uniform(-100, 100),
-        random.uniform(-100, 100)])
+    generator = DataGenerator(theta=[3, -2, 10])
     np_data = generator.generate(500)
     generator.plot()
+    generator.save_data()
